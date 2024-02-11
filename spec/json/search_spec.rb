@@ -18,5 +18,14 @@ RSpec.describe Json::Search do
         ]
       end
     end
+
+    describe "#duplicate_email" do
+      it "returns any records with the same email" do
+        expect(subject.duplicate_email).to eq [
+          {"id"=>2, "full_name"=>"Jane Smith", "email"=>"jane.smith@yahoo.com"},
+          {"id"=>15, "full_name"=>"Another Jane Smith", "email"=>"jane.smith@yahoo.com"}
+        ]
+      end
+    end
   end
 end

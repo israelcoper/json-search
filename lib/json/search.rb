@@ -10,6 +10,16 @@ module Json
       collection.select {|hash| hash["full_name"]&.downcase =~ /#{keyword}/}
     end
 
+    def duplicate_email
+      emails = collection.map(&:values).flatten
+
+      collection.inject([]) do |array, hash|
+        array << hash if emails.select { |email| email == hash["email"] }.size > 1
+
+        array
+      end
+    end
+
     private
 
     def collection
