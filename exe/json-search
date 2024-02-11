@@ -1,6 +1,29 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
+require 'thor'
 require "json/search"
 
-puts "Hello world"
+class CLI < Thor
+  desc "search KEYWORD", "Search and return records with names partially matching a given search query"
+  def search(keyword)
+    result = Json::Search.new.search(keyword)
+
+    puts result
+  rescue StandardError => e
+    STDERR.puts e.message.capitalize
+    exit 1
+  end
+
+  desc "duplicate_email", "Show any records having duplicate email"
+  def duplicate_email
+    result = Json::Search.new.duplicate_email
+
+    puts result
+  rescue StandardError => e
+    STDERR.puts e.message.capitalize
+    exit 1
+  end
+end
+
+CLI.start(ARGV)
