@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "full_name": "John Smith",
+      "email": "john.smith@gmail.com"
+    },
+    {
+      "id": 2,
+      "full_name": "Jane Smith",
+      "email": "jane.smith@yahoo.com"
+    },
+    {
+      "id": 3,
+      "full_name": "Eureka Seven",
+      "email": "eureka.seven@crunchyroll.com"
+    },
+    {
+      "id": 4,
+      "full_name": "Normal Punch",
+      "email": "normal.punch@outlook.com"
+    }
+  ]
+}

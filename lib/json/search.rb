@@ -6,8 +6,21 @@ module Json
   class Search
     class Error < StandardError; end
 
-    def search(keyword)
-      collection.select {|hash| hash["full_name"]&.downcase =~ /#{keyword}/}
+    attr_reader :field, :file_path
+
+    def initialize(**options)
+      @field = options[:field] || "full_name"
+      @file_path = options[:file_path] || default_file # File path must be absolute path of the file
+    end
+
+    def search(keyword = nil)
+      return collection if keyword.nil?
+
+      collection.select do |hash|
+        return [] unless hash.has_key?(field)
+
+        hash[field]&.to_s&.downcase =~ /#{keyword}/
+      end
     end
 
     def duplicate_email
@@ -28,12 +41,15 @@ module Json
 
     def parsed_json
       @parsed_json ||= begin
-        path = File.join(File.join(Dir.pwd, '/data/clients.json'))
-        file = File.read path
+        file = File.read file_path
         json = JSON.parse file
 
         json
       end
+    end
+
+    def default_file
+      File.join(File.join(Dir.pwd, '/data/clients.json'))
     end
   end
 end

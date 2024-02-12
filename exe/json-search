@@ -5,9 +5,12 @@ require 'thor'
 require "json/search"
 
 class CLI < Thor
-  desc "search KEYWORD", "Search and return records with names partially matching a given search query"
-  def search(keyword)
-    result = Json::Search.new.search(keyword)
+  option :field, type: :string
+  option :file_path, type: :string
+  desc "search KEYWORD --field FIELD --file_path FILE_ABSOLUTE_PATH", "Search and return records with names partially matching a given search query"
+  def search(keyword = nil)
+    object = Json::Search.new(field: options[:field], file_path: options[:file_path])
+    result = object.search(keyword)
 
     puts result
   rescue StandardError => e
