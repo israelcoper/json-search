@@ -1,7 +1,6 @@
 require "json/search/version"
 require 'json'
 require "open-uri"
-require 'pry'
 
 module Json
   class Search
@@ -54,7 +53,7 @@ module Json
     end
 
     def default_source
-      File.join(File.join(Dir.pwd, '/data/clients.json'))
+      File.join(Dir.pwd, '/data/clients.json')
     end
   end
 end
