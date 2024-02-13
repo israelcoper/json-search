@@ -1,34 +1,59 @@
 # Json::Search
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/json/search`. To experiment with that code, run `bin/console` for an interactive prompt.
+A simple library that provides basic search functionality to a json response.
 
-TODO: Delete this and the text above, and describe your gem
 
-## Installation
+## Assumptions
 
-Add this line to your application's Gemfile:
+1. Option `--file_path` requires absolute path to file
+2. Option `--url` expects a valid url
+3. IF option `--file_path` and `--url` are both provided, url have the high priority.
+4. The json response is expected to have either `data` or `results` attribute
 
-```ruby
-gem 'json-search'
-```
+  ```
+  {
+    "data": [...]
+  }
+  ```
+  **OR**
+  ```
+  {
+    "results": [...]
+  }
+  ```
 
-And then execute:
 
-    $ bundle install
+## References
 
-Or install it yourself as:
+* https://bundler.io/guides/creating_gem.html
+* https://github.com/rails/thor
 
-    $ gem install json-search
 
 ## Usage
 
-TODO: Write usage instructions here
+After checking out the repo, run bundle install to install dependencies. Then run `bundle exec rspec spec` to run the tests.
 
-## Development
+To use the CLI, execute: `./exe/json-search help`. This instruction will display the following:
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```
+Commands:
+  json-search duplicate_email  # Show any records having duplicate email
+  json-search help [COMMAND]   # Describe available commands or one specific command
+  json-search search KEYWORD   # Search and return records with names partially matching a given search query
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Basic search:
+    ./exe/json-search search jane
+
+Dynamic search field:
+    ./exe/json-search search gmail --field email
+
+Support to search on dynamic file:
+    ./exe/json-search search aol.com --field email --file_path /mnt/d/code/json-search/data/records.json
+
+Support to search on REST api:
+    ./exe/json-search search frozen --field climate --url https://swapi.dev/api/planets
+
 
 ## Contributing
 
