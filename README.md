@@ -43,16 +43,16 @@ Commands:
 ```
 
 Basic search:
-    ./exe/json-search search jane
+`./exe/json-search search jane`
 
 Dynamic search field:
-    ./exe/json-search search gmail --field email
+`./exe/json-search search gmail --field email`
 
 Support to search on dynamic file:
-    ./exe/json-search search aol.com --field email --file_path /mnt/d/code/json-search/data/records.json
+`./exe/json-search search aol.com --field email --file_path /mnt/d/code/json-search/data/records.json`
 
 Support to search on REST api:
-    ./exe/json-search search frozen --field climate --url https://swapi.dev/api/planets
+  `./exe/json-search search frozen --field climate --url https://swapi.dev/api/planets`
 
 
 ## Contributing
