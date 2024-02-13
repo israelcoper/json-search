@@ -5,11 +5,12 @@ require 'thor'
 require "json/search"
 
 class CLI < Thor
-  option :field, type: :string
-  option :file_path, type: :string
-  desc "search KEYWORD --field FIELD --file_path FILE_ABSOLUTE_PATH", "Search and return records with names partially matching a given search query"
+  option :field, type: :string, desc: "Refers to the key to search for"
+  option :file_path, type: :string, desc: "File path option requires absolute path"
+  option :url, type: :string, desc: "The url option expects a valid url"
+  desc "search KEYWORD", "Search and return records with names partially matching a given search query"
   def search(keyword = nil)
-    object = Json::Search.new(field: options[:field], file_path: options[:file_path])
+    object = Json::Search.new(**options)
     result = object.search(keyword)
 
     puts result

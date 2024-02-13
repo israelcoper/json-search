@@ -67,6 +67,25 @@ RSpec.describe Json::Search do
           ]
         end
       end
+
+      describe "url" do
+        let(:url) { "https://swapi.dev/api/planets" }
+        let(:json) { JSON.parse(URI.open(url).read) }
+
+        subject { described_class.new(url: url, field: "climate") }
+
+        it "returns entire collection" do
+          expect(subject.search).to match_array json["results"]
+        end
+
+        it "returns empty array" do
+          expect(subject.search("madagascar")).to eq []
+        end
+
+        it "returns partially match keyword" do
+          expect(subject.search("frozen")[0]["climate"]).to eq json["results"][3]["climate"]
+        end
+      end
     end
 
     describe "#duplicate_email" do

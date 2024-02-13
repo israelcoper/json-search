@@ -1,16 +1,22 @@
 require "json/search/version"
 require 'json'
+require "open-uri"
 require 'pry'
 
 module Json
   class Search
     class Error < StandardError; end
 
-    attr_reader :field, :file_path
+    attr_reader :field, :source
 
     def initialize(**options)
+      options.transform_keys!(&:to_sym)
+
       @field = options[:field] || "full_name"
-      @file_path = options[:file_path] || default_file # File path must be absolute path of the file
+      # Expect a valid url
+      # IF both source are provided, url have the high priority
+      # File path must be absolute path of the file
+      @source = options[:url] || options[:file_path] || default_source
     end
 
     def search(keyword = nil)
@@ -36,19 +42,18 @@ module Json
     private
 
     def collection
-      parsed_json["data"]
+      parsed_json["data"] || parsed_json["results"] # Always expecting a JSON response having either "data" or "results" attribute
     end
 
     def parsed_json
       @parsed_json ||= begin
-        file = File.read file_path
-        json = JSON.parse file
+        json = URI.open(source).read
 
-        json
+        JSON.parse(json)
       end
     end
 
-    def default_file
+    def default_source
       File.join(File.join(Dir.pwd, '/data/clients.json'))
     end
   end
