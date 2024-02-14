@@ -39,7 +39,7 @@ To use the CLI, execute: `./exe/json-search help`. This instruction will display
 Commands:
   json-search duplicate_email  # Show any records having duplicate email
   json-search help [COMMAND]   # Describe available commands or one specific command
-  json-search search KEYWORD   # Search and return records with names partially matching a given search query
+  json-search search [KEYWORD]   # Search and return records with names partially matching a given search query
 ```
 
 Basic search:
